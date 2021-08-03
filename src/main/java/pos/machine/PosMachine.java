@@ -6,8 +6,19 @@ import java.util.stream.Collectors;
 public class PosMachine {
     public String printReceipt(List<String> barcodes) {
         List<Item> itemsWithDetail = convertToItems(barcodes);
-
+        Receipt receipt = calculateReceipt(itemsWithDetail);
         return null;
+    }
+    private Receipt calculateTotalPrice(List<Item> itemsWithDetail, int totalPrice) {
+        for(Item item: itemsWithDetail){
+            totalPrice +=item.getSubTotal();
+        }
+        return new Receipt(itemsWithDetail, totalPrice);
+    }
+
+    private Receipt calculateReceipt(List<Item> itemsWithDetail) {
+        int totalPrice = 0;
+        return calculateTotalPrice(itemsWithDetail, totalPrice);
     }
 
     private List<Item> convertToItems(List<String> barcodes) {
