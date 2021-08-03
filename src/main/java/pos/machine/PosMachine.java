@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 public class PosMachine {
     public String printReceipt(List<String> barcodes) {
         List<Item> itemsWithDetail = convertToItems(barcodes);
+
         return null;
     }
 
@@ -20,11 +21,16 @@ public class PosMachine {
                 if (barcode.equals(itemInfo.getBarcode())) {
                     int quantity = Collections.frequency(barcodes, barcode);
                     int price = itemInfo.getPrice();
-                    Item item = new Item(itemInfo.getName(), quantity, price, quantity * price);
+                    int subTotal = calculateItemsSubtotal(quantity, price);
+                    Item item = new Item(itemInfo.getName(), quantity, price, subTotal);
                     itemList.add(item);
                 }
             }
         }
         return itemList;
+    }
+
+    private int calculateItemsSubtotal(int quantity, int price) {
+        return quantity * price;
     }
 }
