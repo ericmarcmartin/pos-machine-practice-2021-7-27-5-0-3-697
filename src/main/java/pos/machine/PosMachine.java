@@ -7,11 +7,36 @@ public class PosMachine {
     public String printReceipt(List<String> barcodes) {
         List<Item> itemsWithDetail = convertToItems(barcodes);
         Receipt receipt = calculateReceipt(itemsWithDetail);
-        return null;
+        String printedReceipt = renderReceipt(receipt);
+
+        System.out.println(printedReceipt);
+        return printedReceipt;
     }
+
+    private String renderReceipt(Receipt receipt) {
+        String printedReceipt = spliceItemsDetails(receipt);
+        printedReceipt += spliceReceipt(receipt);
+        return printedReceipt;
+    }
+
+    private String spliceReceipt(Receipt receipt) {
+        return "----------------------\n" +
+                "Total: " + receipt.getTotalPrice() + " (yuan)" +
+                "\n**********************";
+    }
+
+    private String spliceItemsDetails(Receipt receipt) {
+        String itemsDetail = "***<store earning no money>Receipt***\n";
+        for (Item item : receipt.getItemDetail()) {
+            itemsDetail += "Name: " + item.getName() + ", " + "Quantity: " + item.getQuantity() + ", " + "Unit price: "
+                    + item.getUnitPrice() + " (yuan), Subtotal: " + item.getSubTotal() + " (yuan)\n";
+        }
+        return itemsDetail;
+    }
+
     private Receipt calculateTotalPrice(List<Item> itemsWithDetail, int totalPrice) {
-        for(Item item: itemsWithDetail){
-            totalPrice +=item.getSubTotal();
+        for (Item item : itemsWithDetail) {
+            totalPrice += item.getSubTotal();
         }
         return new Receipt(itemsWithDetail, totalPrice);
     }
