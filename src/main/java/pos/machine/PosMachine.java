@@ -7,10 +7,8 @@ public class PosMachine {
     public String printReceipt(List<String> barcodes) {
         List<Item> itemsWithDetail = convertToItems(barcodes);
         Receipt receipt = calculateReceipt(itemsWithDetail);
-        String printedReceipt = renderReceipt(receipt);
 
-        System.out.println(printedReceipt);
-        return printedReceipt;
+        return renderReceipt(receipt);
     }
 
     private String renderReceipt(Receipt receipt) {
